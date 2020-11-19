@@ -20,7 +20,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-
     <data>
         <variable
             name="viewModel"
@@ -43,9 +42,9 @@
                 android:layout_height="266dp"
                 android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:imageUrl="@{viewModel.selectedProperty.imgSrcUrl}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:imageUrl="@{viewModel.selectedProperty.imgSrcUrl}"
                 tools:src="@tools:sample/backgrounds/scenic" />
 
             <TextView
@@ -53,21 +52,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@{viewModel.displayPropertyType}"
                 android:textColor="#de000000"
                 android:textSize="39sp"
+                android:text="@{viewModel.displayPropertyType}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/main_photo_image"
-
                 tools:text="To Rent" />
 
             <TextView
                 android:id="@+id/price_value_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{viewModel.displayPropertyPrice}"
                 android:layout_marginTop="8dp"
                 android:textColor="#de000000"
+                android:text="@{viewModel.displayPropertyPrice}"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/property_type_text"

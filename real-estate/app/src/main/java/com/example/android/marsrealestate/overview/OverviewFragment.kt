@@ -25,6 +25,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.android.marsrealestate.R
 import com.example.android.marsrealestate.databinding.FragmentOverviewBinding
+import com.example.android.marsrealestate.databinding.GridViewItemBinding
 import com.example.android.marsrealestate.network.MarsApiFilter
 
 /**
@@ -53,34 +54,19 @@ class OverviewFragment : Fragment() {
         // Giving the binding access to the OverviewViewModel
         binding.viewModel = viewModel
 
-        // Sets the adapter of the photosGrid RecyclerView with clickHandler lambda that
-        // tells the viewModel when our property is clicked
         binding.photosGrid.adapter = PhotoGridAdapter(PhotoGridAdapter.OnClickListener {
             viewModel.displayPropertyDetails(it)
         })
 
-        // Observe the navigateToSelectedProperty LiveData and Navigate when it isn't null
-        // After navigating, call displayPropertyDetailsComplete() so that the ViewModel is ready
-        // for another navigation event.
-        viewModel.navigateToSelectedProperty.observe(this, Observer {
-            if ( null != it ) {
-                // Must find the NavController from the Fragment
+        viewModel.navigateToSelectedProperty.observe(this,  Observer {
+            if (null != it) {
                 this.findNavController().navigate(OverviewFragmentDirections.actionShowDetail(it))
-                // Tell the ViewModel we've made the navigate call to prevent multiple navigation
                 viewModel.displayPropertyDetailsComplete()
             }
         })
 
         setHasOptionsMenu(true)
         return binding.root
-    }
-
-    /**
-     * Inflates the overflow menu that contains filtering options.
-     */
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.overflow_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -92,5 +78,13 @@ class OverviewFragment : Fragment() {
                 }
         )
         return true
+    }
+
+    /**
+     * Inflates the overflow menu that contains filtering options.
+     */
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.overflow_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
     }
 }

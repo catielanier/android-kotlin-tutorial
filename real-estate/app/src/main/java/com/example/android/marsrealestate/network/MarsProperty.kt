@@ -23,11 +23,13 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class MarsProperty(
+        // use JSON annotation to convert json key names to camel case
         val id: String,
-        @Json(name = "img_src") val imgSrcUrl: String,
+        @Json(name = "img_src")
+        val imgSrcUrl: String,
         val type: String,
-        val price: Double) : Parcelable {
-    val isRental
-        get() = type == "rent"
+        val price: Double
+) : Parcelable {
+        val isRental
+                get() = type == "rent"
 }
-
