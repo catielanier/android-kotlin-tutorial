@@ -22,23 +22,30 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 
+// instantiating the interface as a DAO to communicate with sql
 @Dao
 interface SleepDatabaseDao {
+    // create an entity in the db
     @Insert
     fun insert(night: SleepNight)
 
+    // update an entity in the db
     @Update
     fun update(night: SleepNight)
 
-    @Query("SELECT * from daily_sleep_quality_table WHERE nightId = :key")
+    // read a single entity from the db, may be null if id doesn't exist
+    @Query("SELECT * FROM daily_sleep_quality_tracker WHERE nightId = :key")
     fun get(key: Long): SleepNight?
 
-    @Query("DELETE FROM daily_sleep_quality_table")
+    // destroy all entities from the db
+    @Query("DELETE FROM daily_sleep_quality_tracker")
     fun clear()
 
-    @Query("SELECT * FROM daily_sleep_quality_table ORDER BY nightId DESC")
+    // read all entities from the db, return a immutable live list of nights
+    @Query("SELECT * FROM daily_sleep_quality_tracker ORDER BY nightId DESC")
     fun getAllNights(): LiveData<List<SleepNight>>
 
-    @Query("SELECT * FROM daily_sleep_quality_table ORDER BY nightId DESC LIMIT 1")
+    // read most recent entity from db
+    @Query("SELECT * FROM daily_sleep_quality_tracker ORDER BY nightId DESC LIMIT 1")
     fun getTonight(): SleepNight?
 }

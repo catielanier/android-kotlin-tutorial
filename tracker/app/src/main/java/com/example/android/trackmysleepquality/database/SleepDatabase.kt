@@ -21,23 +21,39 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [SleepNight::class], version = 1,  exportSchema = false)
+// instantiates the database, entities consume a list of tables
+@Database(entities = [SleepNight::class], version = 1, exportSchema = false)
 abstract class SleepDatabase : RoomDatabase() {
+    // calls upon the DAO for CRUD operations
     abstract val sleepDatabaseDao: SleepDatabaseDao
+
+    // create a companion object to call methods and fields without instantiating the class
     companion object {
+        // annotate with volatile to make writes to this field immediately visible to other threads
         @Volatile
         private var INSTANCE: SleepDatabase? = null
-        fun getInstance(context: Context): SleepDatabase {
+
+        // return a reference to the db, requires a context
+        fun getInstance(context: Context) : SleepDatabase {
+            // create a synchronized lock to only allow single threads from accessing, allows the instance to be init once
             synchronized(this) {
+                // get current value of instance (mutable)
                 var instance = INSTANCE
+
+                // check if there's already a database, if not, create it.
                 if (instance == null) {
                     instance = Room.databaseBuilder(
                             context.applicationContext,
                             SleepDatabase::class.java,
-                            "sleep_history_database"
-                    ).fallbackToDestructiveMigration().build()
+                    "sleep_history_database"
+                    )
+                            .fallbackToDestructiveMigration()
+                            .build()
+                    // assign INSTANCE to created db
                     INSTANCE = instance
                 }
+
+                // return the database
                 return instance
             }
         }

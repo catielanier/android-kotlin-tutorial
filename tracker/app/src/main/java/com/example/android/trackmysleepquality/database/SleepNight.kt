@@ -20,14 +20,21 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "daily_sleep_quality_table")
-data class SleepNight  (
+// TODO (01) Create the SleepNight class.
+// Annotate the class as an entity in the database with the sql table name
+@Entity(tableName = "daily_sleep_quality_tracker")
+data class SleepNight (
+        // auto-generate the id
         @PrimaryKey(autoGenerate = true)
         var nightId: Long = 0L,
+
+        // each field for the database needs to be annotated as a column in order to declare it as a field in the table
         @ColumnInfo(name = "start_time_milli")
-        val startTimeMilli: Long =  System.currentTimeMillis(),
+        val startTimeMilli: Long = System.currentTimeMillis(),
+
         @ColumnInfo(name = "end_time_milli")
         var endTimeMilli: Long = startTimeMilli,
+
         @ColumnInfo(name = "quality_rating")
         var sleepQuality: Int = -1
 )
