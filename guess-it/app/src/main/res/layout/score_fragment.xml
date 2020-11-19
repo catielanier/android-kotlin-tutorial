@@ -19,6 +19,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="scoreViewModel"
             type="com.example.android.guesstheword.screens.score.ScoreViewModel" />
@@ -54,6 +55,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="8dp"
             android:fontFamily="sans-serif"
+            android:text="@{String.valueOf(scoreViewModel.score)}"
             android:textColor="@color/black_text_color"
             android:textSize="34sp"
             android:textStyle="normal"
@@ -70,9 +72,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
+            android:onClick="@{() -> scoreViewModel.onPlayAgain()}"
             android:text="@string/play_again"
             android:theme="@style/GoButton"
-            android:onClick="@{() -> scoreViewModel.onPlayAgain()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
